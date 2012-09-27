@@ -15,5 +15,11 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+
+    users = User.all(limit: 6)
+    50.times do
+      content = "http://www.youtube.com/watch?v=9bZkp7q19f0"
+      users.each { |user| user.videoposts.create!(content: content) }
+    end
   end
 end

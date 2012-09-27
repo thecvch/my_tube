@@ -8,4 +8,13 @@
       </h1>
     </section>
   </aside>
+  <div class="span8">
+    <% if @user.videoposts.any? %>
+        <h3>Videos (<%= @user.videoposts.count %>)</h3>
+        <ol class="videoposts">
+          <%= render @videoposts %>
+        </ol>
+        <%= will_paginate @videoposts %>
+    <% end %>
+  </div>
 </div>

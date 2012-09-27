@@ -1,4 +1,23 @@
-<div class="center hero-unit">
-  <%= raw(youtube_embed('http://www.youtube.com/watch?v=9bZkp7q19f0')) %>
-</div>
+<% if signed_in? %>
+    <div class="row">
+      <aside class="span4">
+        <section>
+          <%= render 'shared/user_info' %>
+        </section>
+        <section>
+          <%= render 'shared/videopost_form' %>
+        </section>
+      </aside>
+      <div class="span8">
+        <h3>Video Feed</h3>
+        <%= render 'shared/feed' %>
+      </div>
+    </div>
+<% else %>
+    <div class="center hero-unit">
+      <%= raw(youtube_embed('http://www.youtube.com/watch?v=9bZkp7q19f0')) %>
+    </div>
+<% end %>
+
+
 

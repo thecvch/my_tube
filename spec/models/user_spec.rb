@@ -17,6 +17,8 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:videoposts) }
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -124,5 +126,38 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "videopost associations" do
+
+    before { @user.save }
+    let!(:older_videopost) do
+      FactoryGirl.create(:videopost, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_videopost) do
+      FactoryGirl.create(:videopost, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right videopost in the right order" do
+      @user.videoposts.should == [newer_videopost, older_videopost]
+    end
+
+    it "should destroy associated videopost" do
+      videoposts = @user.videoposts
+      @user.destroy
+      videoposts.each do |videopost|
+        Videopost.find_by_id(videopost.id).should be_nil
+      end
+    end
+
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:videopost, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_videopost) }
+      its(:feed) { should include(older_videopost) }
+      its(:feed) { should_not include(unfollowed_post) }
+    end
   end
 end
