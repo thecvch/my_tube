@@ -2,14 +2,14 @@ class VideopostsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy]
   before_filter :correct_user,   only: :destroy
 
-  respond_to :html, :xml
+  respond_to :html, :xml, :js
 
   def create
     @videopost = current_user.videoposts.build(params[:videopost])
     if @videopost.save
       flash[:success] = "Video posted!"
-      redirect_to root_url
-      respond_with @user
+      #redirect_to root_url
+      respond_with(@videopost, location: root_url)
     else
       @feed_items = []
       render 'static_pages/home'
@@ -18,8 +18,8 @@ class VideopostsController < ApplicationController
 
   def destroy
     @videopost.destroy
-    redirect_to root_url
-    respond_with @user
+    #redirect_to root_url
+    respond_with(@videopost, location: root_url)
   end
 
   private

@@ -6,6 +6,6 @@
   <% if current_user?(videopost.user) %>
       <%= link_to "delete", videopost, method: :delete,
                   data: { confirm: "You sure?" },
-                  title: videopost.content %>
+                  title: videopost.content, remote: true %>
   <% end %>
 </li>

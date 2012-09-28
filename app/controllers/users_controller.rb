@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       respond_with @user
       sign_in @user
       flash[:success] = "Welcome to MyTube!"
-      redirect_to @user
+      #redirect_to @user
     else
       render 'new'
     end
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
       respond_with @user
       flash[:success] = "Profile updated"
       sign_in @user
-      redirect_to @user
+      #redirect_to @user
     else
       render 'edit'
     end
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User destroyed."
-    redirect_to users_url
+    #redirect_to users_url
     respond_with @user
   end
 
