@@ -18,9 +18,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      respond_with @user
       sign_in @user
       flash[:success] = "Welcome to MyTube!"
+      respond_with @user
       #redirect_to @user
     else
       render 'new'
@@ -32,9 +32,9 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(params[:user])
-      respond_with @user
       flash[:success] = "Profile updated"
       sign_in @user
+      respond_with @user
       #redirect_to @user
     else
       render 'edit'

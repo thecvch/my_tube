@@ -1,0 +1,2 @@
+$("#xxx").html("<%= escape_javascript(render('shared/feed')) %>")
+$("#zzz").html('<%= escape_javascript(pluralize(current_user.videoposts.count, "Videos")) %>')
